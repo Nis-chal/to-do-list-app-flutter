@@ -9,7 +9,7 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-    List<Task> tasks = [
+  List<Task> tasks = [
     Task(name: 'Buy milk'),
     Task(name: 'Buy eggs'),
     Task(name: 'Buy bread'),
@@ -24,7 +24,16 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
-              context: context, builder: (context) => AddTaskScreen());
+            context: context,
+            builder: (context) => AddTaskScreen(
+              (newTasktitle) {
+                setState(() {
+                  tasks.add(Task(name: newTasktitle));
+                });
+                Navigator.pop(context);
+              },
+            ),
+          );
         },
       ),
       body: Column(
@@ -55,7 +64,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '12 Tasts',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
